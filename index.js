@@ -1,3 +1,4 @@
+
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
@@ -18,7 +19,9 @@ const choiceList = {
     viewAllMan: "View all by manager",
     addEmp: "Add employee",
     updateEmp: "Update employee role",
-    viewAllRoles: "View all roles"
+    viewAllRoles: "View all roles",
+    addNewRole: "Add new role",
+    addNewDept: "Add new Department"
 };
 
 // role add/change grab
@@ -46,7 +49,7 @@ init = () => {
             type: "list",
             name: "choices",
             message: "What would you like to do?",
-            choices: [choiceList.viewAllEmp, choiceList.viewAllDep, choiceList.viewAllMan, choiceList.addEmp, choiceList.updateEmp, choiceList.viewAllRoles]
+            choices: [choiceList.viewAllEmp, choiceList.viewAllDep, choiceList.viewAllMan, choiceList.addEmp, choiceList.updateEmp, choiceList.viewAllRoles, choiceList.addNewRole, choiceList.addNewDept]
         }
     ]).then((answers) => {
         switch (answers.choices) {
@@ -68,44 +71,14 @@ init = () => {
             case choiceList.viewAllRoles:
                 //function will go here
                 break;
+            case choiceList.addNewRole:
+                //function will go here
+                break;
+            case choiceList.addNewDept:
+                //function will go here
+                break;
         }
     })
 };
 
 init();
-
-const addRole = () => {
-    inquirer
-        .prompt([
-            {
-                type: "input",
-                name: "newEmployee",
-                message: "Enter the title of the role you would like to add"
-            },
-            {
-                type: "input",
-                name: "addId",
-                message: "Add an id for this person "
-            },
-            {
-                type: "input",
-                name: "addSalary",
-                message: "Enter a starting salary for this person"
-            }
-        ]).then((answers) => {
-
-        })
-}
-// what is the employees first name
-// what is the employees last name
-// role
-// salary?
-
-// remove employee
-// insert employees into a list
-
-// insert employees
-// change their role 
-
-
-
