@@ -1,7 +1,14 @@
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
-
+const mysql = require("mysql2");
+const connection = mysql.createConnection({
+    host: 'localhost',
+    port: 3306,
+    user: 'root',
+    password: 'root',
+    database: 'employeetrack_DB'
+});
 
 // makes grabbing choices easier
 const choiceList = {
@@ -12,13 +19,6 @@ const choiceList = {
     updateEmp: "Update employee role",
     viewAllRoles: "View all roles"
 };
-
-// view all employees
-//  view all by department
-// view all employees by manager
-// add employee
-// update employee role
-// view all roles
 
 // role add/change grab
 const updateEmp = {
