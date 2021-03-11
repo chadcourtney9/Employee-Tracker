@@ -2,6 +2,7 @@ const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 const mysql = require("mysql2");
+const { type } = require("os");
 const connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
@@ -73,6 +74,28 @@ init = () => {
 
 init();
 
+const addRole = () => {
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "newEmployee",
+                message: "Enter the title of the role you would like to add"
+            },
+            {
+                type: "input",
+                name: "addId",
+                message: "Add an id for this person "
+            },
+            {
+                type: "input",
+                name: "addSalary",
+                message: "Enter a starting salary for this person"
+            }
+        ]).then((answers) => {
+
+        })
+}
 // what is the employees first name
 // what is the employees last name
 // role
@@ -84,7 +107,5 @@ init();
 // insert employees
 // change their role 
 
-changeRole = (answers) => {
 
-}
 
