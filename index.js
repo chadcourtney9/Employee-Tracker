@@ -16,7 +16,6 @@ const connection = mysql.createConnection({
 const choiceList = {
     viewAllEmp: "View all employees",
     viewAllDep: "View all by department",
-    viewAllMan: "View all by manager",
     addEmp: "Add employee",
     updateEmp: "Update employee role",
     viewAllRoles: "View all roles",
@@ -49,18 +48,15 @@ init = () => {
             type: "list",
             name: "choices",
             message: "What would you like to do?",
-            choices: [choiceList.viewAllEmp, choiceList.viewAllDep, choiceList.viewAllMan, choiceList.addEmp, choiceList.updateEmp, choiceList.viewAllRoles, choiceList.addNewRole, choiceList.addNewDept]
+            choices: [choiceList.viewAllEmp, choiceList.viewAllDep, choiceList.addEmp, choiceList.updateEmp, choiceList.viewAllRoles, choiceList.addNewRole, choiceList.addNewDept]
         }
     ]).then((answers) => {
         switch (answers.choices) {
             case choiceList.viewAllEmp:
-                //function will go here
+                viewAllEmpFunc();
                 break;
             case choiceList.viewAllDep:
-                //function will go here
-                break;
-            case choiceList.viewAllMan:
-                //function will go here
+                viewAllDeptFunc();
                 break;
             case choiceList.addEmp:
                 addEmployee();
@@ -69,13 +65,12 @@ init = () => {
                 //function will go here
                 break;
             case choiceList.viewAllRoles:
-                //function will go here
+                viewAllRolesFunc();
                 break;
             case choiceList.addNewRole:
                 addRole();
                 break;
             case choiceList.addNewDept:
-                //function will go here
                 addDepartment();
                 break;
         }
@@ -166,5 +161,34 @@ const addDepartment = () => {
                 console.table("Inserted new department!")
             init();
         })
+    })
+};
+// roles id = role_id
+const viewAllEmpFunc = () => {
+    connection.query(
+        'SELECT first_name, last_name, title, salary FROM employee INNER JOIN roles ON employee.role_id = roles.id;',
+        function (error, result, fields) {
+            if (error) console.table("error has occure, try again");
+            else
+                console.table(result)
+            init();
+        })
+};
+
+const viewAllDeptFunc = () => {
+    connection.query('SELECT name FROM department', function (error, result, fields) {
+        if (error) console.table("error has occured, try again")
+        else
+            console.table(result)
+        init();
+    })
+};
+
+const viewAllRolesFunc = () => {
+    connection.query("SELECT title FROM roles", function (error, result, fields) {
+        if (error) console.table("error has occured, try again");
+        else
+            console.table(result)
+        init();
     })
 };
