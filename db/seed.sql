@@ -35,16 +35,12 @@ VALUE ("Minato", "Uzamaki", null, 3 );
 INSERT INTO employee (first_name, last_name, manager_id, role_id)
 VALUE ("Kaneki", "Ken", null, 4 );
 
+TRUNCATE employee;
 -- Employees
 INSERT INTO employee (first_name, last_name, manager_id, role_id)
-VALUE ("Joe", "Lyons", 1, 5 );
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
-VALUE ("Patrick", "DeMarco", 2, 6) ;
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
-VALUE ("Mike", "Fearnley", 2, 7 );
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
-VALUE ("Toni", "Powell", 3, 8 );
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
-VALUE ("Tom", "Fallon", 3, 9 );
-INSERT INTO employee (first_name, last_name, manager_id, role_id)
-VALUE ("Tim", "Vigneau", 4, 10 );
+VALUE ("Joe", "Lyons", 1, 5 ),
+("Patrick", "DeMarco", 2, 6),
+("Mike", "Fearnley", 2, 7 ),
+("Toni", "Powell", 3, 8 ),
+("Tom", "Fallon", 3, 9 ),
+("Tim", "Vigneau", 4, 10 );

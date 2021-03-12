@@ -37,10 +37,10 @@ const updateEmp = {
 
 // department add
 const addDep = {
+    legalDep: "Legal",
+    salesDep: "Sales",
     engeeringDep: "Engineering",
     financialDep: "Finances",
-    salesDep: "Sales",
-    legalDep: "Legal",
 };
 
 init = () => {
@@ -72,6 +72,7 @@ init = () => {
                 //function will go here
                 break;
             case choiceList.addNewRole:
+                addRole();
                 //function will go here
                 break;
             case choiceList.addNewDept:
@@ -82,3 +83,35 @@ init = () => {
 };
 
 init();
+
+const addRole = () => {
+    connection.query('SELECT department.id AS value, department.name FROM department', (err, results) => {
+        inquirer
+            .prompt([
+                {
+                    type: "input",
+                    name: "title",
+                    message: "Enter the title of the role you would like to add"
+                },
+                {
+                    type: "list",
+                    name: "department_id",
+                    message: "choose department",
+                    choices: results
+                },
+                {
+                    type: "input",
+                    name: "salary",
+                    message: "Enter a starting salary for this person"
+                }
+            ]).then((answers) => {
+                connection.query(
+                    'INSERT INTO roles SET ?', answers, function (error, data) {
+                        if (err) console.log("Error occured, try again")
+                        else
+                            console.log("Inserted new role!")
+                    }
+                )
+            });
+    })
+};
