@@ -76,6 +76,7 @@ init = () => {
                 break;
             case choiceList.addNewDept:
                 //function will go here
+                addDepartment();
                 break;
         }
     })
@@ -152,5 +153,18 @@ const addEmployee = () => {
 };
 
 const addDepartment = () => {
-
-}
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "name",
+            message: "What is then name of the new department?"
+        }
+    ]).then((answers) => {
+        connection.query('INSERT INTO department SET ?', answers, function (error, data) {
+            if (error) console.table(answers)
+            else
+                console.table("Inserted new department!")
+            init();
+        })
+    })
+};
