@@ -63,7 +63,7 @@ init = () => {
                 //function will go here
                 break;
             case choiceList.addEmp:
-                //function will go here
+                addEmployee();
                 break;
             case choiceList.updateEmp:
                 //function will go here
@@ -73,7 +73,6 @@ init = () => {
                 break;
             case choiceList.addNewRole:
                 addRole();
-                //function will go here
                 break;
             case choiceList.addNewDept:
                 //function will go here
@@ -110,8 +109,48 @@ const addRole = () => {
                         if (err) console.log("Error occured, try again")
                         else
                             console.log("Inserted new role!")
+                        init();
                     }
                 )
             });
     })
 };
+
+
+const addEmployee = () => {
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "first_name",
+                message: "What is the new employees first name?"
+            },
+            {
+                type: "input",
+                name: "last_name",
+                message: "What is new employees last name"
+            },
+            {
+                type: "input",
+                name: "manager_id",
+                message: "What is the managers id?"
+            },
+            {
+                type: "input",
+                name: "role_id",
+                message: "What is the id of their role?"
+            }
+        ]).then((answers) => {
+            connection.query('INSERT INTO employee SET ?', answers, function (error, data) {
+                if (error) console.table(answers)
+                else
+                    console.log("Inserted new employee!")
+                init();
+            }
+            );
+        })
+};
+
+const addDepartment = () => {
+
+}
