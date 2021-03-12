@@ -23,25 +23,6 @@ const choiceList = {
     addNewDept: "Add new Department"
 };
 
-// role add/change grab
-const updateEmp = {
-    sales: "Salesperson",
-    salesLead: "Saleslead",
-    manager: "Manager",
-    engineer: "Software Engineer",
-    leadEngineer: "Lead Engineer",
-    lawyer: "Lawyer",
-    accountant: "Accountant",
-};
-
-// department add
-const addDep = {
-    legalDep: "Legal",
-    salesDep: "Sales",
-    engeeringDep: "Engineering",
-    financialDep: "Finances",
-};
-
 init = () => {
     inquirer.prompt([
         {
@@ -104,14 +85,13 @@ const addRole = () => {
                     'INSERT INTO roles SET ?', answers, function (error, data) {
                         if (err) console.log("Error occured, try again")
                         else
-                            console.log("Inserted new role!")
+                            console.log(data)
                         init();
                     }
                 )
             });
     })
 };
-
 
 const addEmployee = () => {
     inquirer
@@ -140,7 +120,7 @@ const addEmployee = () => {
             connection.query('INSERT INTO employee SET ?', answers, function (error, data) {
                 if (error) console.table(answers)
                 else
-                    console.log("Inserted new employee!")
+                    console.log(data)
                 init();
             }
             );
@@ -156,12 +136,12 @@ const addDepartment = () => {
         }
     ]).then((answers) => {
         connection.query('INSERT INTO department SET ?', answers, function (error, data) {
-            if (error) console.table(answers)
+            if (error) console.table(answers);
             else
-                console.table("Inserted new department!")
+                console.table("Inserted new department!");
             init();
-        })
-    })
+        });
+    });
 };
 
 const viewAllEmpFunc = () => {
@@ -170,18 +150,18 @@ const viewAllEmpFunc = () => {
         function (error, result, fields) {
             if (error) console.table("error has occure, try again");
             else
-                console.table(result)
+                console.table(result);
             init();
-        })
+        });
 };
 
 const viewAllDeptFunc = () => {
     connection.query('SELECT name FROM department', function (error, result, fields) {
-        if (error) console.table("error has occured, try again")
+        if (error) console.table("error has occured, try again");
         else
-            console.table(result)
+            console.table(result);
         init();
-    })
+    });
 };
 
 const viewAllRolesFunc = () => {
@@ -211,7 +191,7 @@ const updateEmpFunc = () => {
             connection.query(`UPDATE employee SET role_id = ${answers.role_id} WHERE employee.last_name = '${answers.last_name}'`, function (error, data) {
                 if (error) console.table(answers);
                 else
-                    console.table("Update was a success!");
+                    console.table(data);
                 init();
             });
         });
