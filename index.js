@@ -156,7 +156,7 @@ const viewAllEmpFunc = () => {
 };
 
 const viewAllDeptFunc = () => {
-    connection.query('SELECT name FROM department', function (error, result, fields) {
+    connection.query('SELECT employee.first_name, employee.last_name, department.name AS Department FROM employee JOIN roles ON employee.role_id = roles.id JOIN department ON roles.department_id = department.id ORDER BY employee.id', function (error, result, fields) {
         if (error) console.table("error has occured, try again");
         else
             console.table(result);
