@@ -62,7 +62,7 @@ init = () => {
                 addEmployee();
                 break;
             case choiceList.updateEmp:
-                //function will go here
+                updateEmpFunc();
                 break;
             case choiceList.viewAllRoles:
                 viewAllRolesFunc();
@@ -163,7 +163,7 @@ const addDepartment = () => {
         })
     })
 };
-// roles id = role_id
+
 const viewAllEmpFunc = () => {
     connection.query(
         'SELECT first_name, last_name, title, salary FROM employee INNER JOIN roles ON employee.role_id = roles.id;',
@@ -191,4 +191,29 @@ const viewAllRolesFunc = () => {
             console.table(result)
         init();
     })
+};
+
+const updateEmpFunc = () => {
+    connection.query('SELECT employee.last_name AS value FROM employee', (err, results) => {
+        inquirer.prompt([
+            {
+                type: "list",
+                name: "last_name",
+                message: "Choose employee to update?",
+                choices: results
+            },
+            {
+                type: "input",
+                name: "role_id",
+                message: "What is this employees new role_id?"
+            }
+        ]).then((answers) => {
+            connection.query(`UPDATE employee SET role_id = ${answers.role_id} WHERE employee.last_name = '${answers.last_name}'`, function (error, data) {
+                if (error) console.table(answers);
+                else
+                    console.table("Update was a success!");
+                init();
+            });
+        });
+    });
 };
