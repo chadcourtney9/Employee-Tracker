@@ -33,20 +33,23 @@ init = () => {
         }
     ]).then((answers) => {
         switch (answers.choices) {
+            // this collection of prompts here allows you to call and view all employees departmetns and roles
             case choiceList.viewAllEmp:
                 viewAllEmpFunc();
+                break;
+            case choiceList.viewAllRoles:
+                viewAllRolesFunc();
                 break;
             case choiceList.viewAllDep:
                 viewAllDeptFunc();
                 break;
-            case choiceList.addEmp:
-                addEmployee();
-                break;
+            // calls the update employee function
             case choiceList.updateEmp:
                 updateEmpFunc();
                 break;
-            case choiceList.viewAllRoles:
-                viewAllRolesFunc();
+            // this grouping is to add employee, department and role
+            case choiceList.addEmp:
+                addEmployee();
                 break;
             case choiceList.addNewRole:
                 addRole();
@@ -78,7 +81,7 @@ const addRole = () => {
                 {
                     type: "input",
                     name: "salary",
-                    message: "Enter a starting salary for this person"
+                    message: "Enter a starting salary for this role"
                 }
             ]).then((answers) => {
                 connection.query(
@@ -146,6 +149,7 @@ const addDepartment = () => {
 // generates a table with all of the employees including their role and salary
 const viewAllEmpFunc = () => {
     connection.query(
+        // joins employee table and roles table through the role_id and roles.id, allowing to access the salary and title of the role that each employee has
         'SELECT first_name, last_name, title, salary FROM employee INNER JOIN roles ON employee.role_id = roles.id;',
         function (error, result, fields) {
             if (error) console.table("error has occure, try again");
@@ -174,12 +178,14 @@ const viewAllRolesFunc = () => {
 };
 // allows user to update roles of employees
 const updateEmpFunc = () => {
+    // grabs the employees by their last name
     connection.query('SELECT employee.last_name AS value FROM employee', (err, results) => {
         inquirer.prompt([
             {
                 type: "list",
                 name: "last_name",
                 message: "Choose employee to update?",
+                // takes the query of last name and shows them as choices
                 choices: results
             },
             {
@@ -188,6 +194,7 @@ const updateEmpFunc = () => {
                 message: "What is this employees new role_id?"
             }
         ]).then((answers) => {
+            // updates the employees role id that is correllated to the roles in the roles table and changes the role based on the selected user last name
             connection.query(`UPDATE employee SET role_id = ${answers.role_id} WHERE employee.last_name = '${answers.last_name}'`, function (error, data) {
                 if (error) console.table(answers);
                 else
