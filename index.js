@@ -22,7 +22,7 @@ const choiceList = {
     addNewRole: "Add new role",
     addNewDept: "Add new Department"
 };
-
+// initial function to start the inquirer prompts
 init = () => {
     inquirer.prompt([
         {
@@ -59,7 +59,7 @@ init = () => {
 };
 
 init();
-
+// designed to add a new role into the database, based on the user input
 const addRole = () => {
     connection.query('SELECT department.id AS value, department.name FROM department', (err, results) => {
         inquirer
@@ -92,7 +92,7 @@ const addRole = () => {
             });
     })
 };
-
+// adds a new employee based on the users input
 const addEmployee = () => {
     inquirer
         .prompt([
@@ -126,7 +126,7 @@ const addEmployee = () => {
             );
         })
 };
-
+// adds department by name
 const addDepartment = () => {
     inquirer.prompt([
         {
@@ -143,7 +143,7 @@ const addDepartment = () => {
         });
     });
 };
-
+// generates a table with all of the employees including their role and salary
 const viewAllEmpFunc = () => {
     connection.query(
         'SELECT first_name, last_name, title, salary FROM employee INNER JOIN roles ON employee.role_id = roles.id;',
@@ -154,7 +154,7 @@ const viewAllEmpFunc = () => {
             init();
         });
 };
-
+// generates all of the departments
 const viewAllDeptFunc = () => {
     connection.query('SELECT employee.first_name, employee.last_name, department.name AS Department FROM employee JOIN roles ON employee.role_id = roles.id JOIN department ON roles.department_id = department.id ORDER BY employee.id', function (error, result, fields) {
         if (error) console.table("error has occured, try again");
@@ -163,7 +163,7 @@ const viewAllDeptFunc = () => {
         init();
     });
 };
-
+// allows user to view all roles
 const viewAllRolesFunc = () => {
     connection.query("SELECT title FROM roles", function (error, result, fields) {
         if (error) console.table("error has occured, try again");
@@ -172,7 +172,7 @@ const viewAllRolesFunc = () => {
         init();
     })
 };
-
+// allows user to update roles of employees
 const updateEmpFunc = () => {
     connection.query('SELECT employee.last_name AS value FROM employee', (err, results) => {
         inquirer.prompt([
